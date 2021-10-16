@@ -1,10 +1,17 @@
-const express = require( 'express')
+const express = require('express');
 
-const app =  express()
+require('dotenv').config();
 
-app.use('/',(req , res)=>{
-  res.send('Hola Mundo')
-})
-app.listen(3005 , ()=>{
-  console.log('Api escuchando en el puerto 3005')
-})
+const config = require('../config')
+
+const app = express();
+
+app.use(express.json());
+
+app.use('/', (req, res) => {
+	res.send('Hola Mundo');
+});
+
+app.listen(config.api.port, () => {
+	console.log(`Api Escuchando en el puerto ${config.api.port}`);
+});
