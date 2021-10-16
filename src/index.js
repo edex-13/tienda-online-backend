@@ -1,10 +1,29 @@
-const express = require( 'express')
+const express = require('express');
 
-const app =  express()
+require('dotenv').config();
 
-app.use('/',(req , res)=>{
-  res.send('Hola Mundo')
+const config = require('../config');
+
+const app = express();
+const products = require('./components/products/network.product.js');
+const {logError, userError, internalError} = require('./middlewares/error.handle.js');
+const response = require('./middlewares/response.handle.js');
+
+app.use(express.json());
+
+app.use('/products', products);
+app.use((req , res , next)=>{
+  next({
+    isUserError:true ,
+    status: 404,
+    message: 'resource not found'
+  })
 })
-app.listen(3005 , ()=>{
-  console.log('Api escuchando en el puerto 3005')
-})
+app.use(logError);
+app.use(userError);
+app.use(internalError);
+
+
+app.listen(config.api.port, () => {
+	console.log(`Api Escuchando en el puerto ${config.api.port}`);
+});
