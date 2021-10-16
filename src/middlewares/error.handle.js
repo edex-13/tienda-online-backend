@@ -10,7 +10,7 @@ const userError = (err, req, res, next) => {
 		res.status(status).json({
 			error: true,
 			status,
-			body: message,
+			message,
 		});
 	}
 	next(err);
@@ -22,7 +22,7 @@ const internalError = (err, req, res, next) => {
 	res.status(status).json({
 		error: true,
 		status,
-		body: message,
+		message,
 	});
 };
 
