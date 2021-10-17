@@ -2,13 +2,17 @@ const express = require('express');
 
 const router = express.Router();
 const response = require('../../middlewares/response.handle.js');
+const validatorHandler = require('../../middlewares/validator.handle.js');
+const {createProductSchema, searchProductsSchema, deleteProductSchema} = require('./schema.product.js');
 
+const controller = require('./controller.product.js');
 router.get(
 	'/',
-	(req, res, next) => {
+	async (req, res, next) => {
 		try {
+			const response = await controller.listProducts();
 			res.locals.status = 200;
-			res.locals.message = 'HOLA DESDE PRODUCTOS';
+			res.locals.message = response;
 			next();
 		} catch (error) {
 			next(error);
@@ -18,10 +22,12 @@ router.get(
 );
 router.get(
 	'/search',
-	(req, res, next) => {
+	validatorHandler(searchProductsSchema, 'query'),
+	async (req, res, next) => {
 		try {
+			const response = await controller.shearchProducts(req.query.title);
 			res.locals.status = 200;
-			res.locals.message = 'HOLA DESDE LA BUSQUEDA DE PRODUCTOS';
+			res.locals.message = response;
 			next();
 		} catch (error) {
 			next(error);
@@ -31,10 +37,12 @@ router.get(
 );
 router.post(
 	'/',
-	(req, res, next) => {
+	validatorHandler(createProductSchema, 'body'),
+	async (req, res, next) => {
 		try {
-			res.locals.status = 200;
-			res.locals.message = 'HOLA DESDE AGREGAR UN PRODUCTO ';
+			const response = await controller.createProduct(req.body);
+			res.locals.status = 201;
+			res.locals.message = response;
 			next();
 		} catch (error) {
 			next(error);
@@ -43,11 +51,13 @@ router.post(
 	response
 );
 router.delete(
-	'/',
-	(req, res, next) => {
+	'/:id',
+	validatorHandler(deleteProductSchema, 'params'),
+	async (req, res, next) => {
 		try {
+			await controller.deleteProduct(req.params.id);
 			res.locals.status = 200;
-			res.locals.message = 'HOLA DESDE AGREGAR UN ELIMINAR ';
+			res.locals.message = `The product with the id ${req.params.id} has been removed`;
 			next();
 		} catch (error) {
 			next(error);
