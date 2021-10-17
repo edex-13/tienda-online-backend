@@ -4,7 +4,7 @@
   "description": "Este es el backend de una pequeña tienda online donde podrás comprar productos deportivos. Este proyecto esta desarrollado en node js y con ayuda de express",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js",
+    "start": "node src/index.js",
     "build": "node src/index.js"
   },
   "repository": {
@@ -28,5 +28,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.13"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
