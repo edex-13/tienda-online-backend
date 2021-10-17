@@ -2,7 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 const response = require('../../middlewares/response.handle.js');
-
+const validatorHandler = require('../../middlewares/validator.handle.js');
+const {createProductSchema,searchProductsSchema,deleteProductSchema} = require('./schema.product.js')
 router.get(
 	'/',
 	(req, res, next) => {
@@ -18,6 +19,7 @@ router.get(
 );
 router.get(
 	'/search',
+	validatorHandler(searchProductsSchema,'query'),
 	(req, res, next) => {
 		try {
 			res.locals.status = 200;
@@ -31,6 +33,7 @@ router.get(
 );
 router.post(
 	'/',
+	validatorHandler(createProductSchema,'body'),
 	(req, res, next) => {
 		try {
 			res.locals.status = 200;
@@ -43,7 +46,8 @@ router.post(
 	response
 );
 router.delete(
-	'/',
+	'/:id',
+	validatorHandler(deleteProductSchema,'params'),
 	(req, res, next) => {
 		try {
 			res.locals.status = 200;
