@@ -1,4 +1,6 @@
 module.exports = {
+	env: process.env.NODE_ENV || 'dev',
+  isProd: process.env.NODE_ENV === 'production',
 	api: {
 		port: process.env.API || 3000,
 	},
@@ -8,5 +10,6 @@ module.exports = {
 		Host: process.env.Host,
 		Name: process.env.Name,
 		Port: process.env.Port,
+		URL: process.env.DATABASE_URL,
 	},
 };
