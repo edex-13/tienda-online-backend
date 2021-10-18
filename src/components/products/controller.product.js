@@ -1,22 +1,38 @@
-const {v4: uuidv4} = require('uuid');
+const {models} = require('../../data/sequelize.data.js');
 
-// const table = 'user';
-
+const listProducts = async () => {
+	const rta = await models.products.findAll();
+	return rta;
+};
+const shearchProducts = async (title) => {
+	const products = await listProducts();
+	const search = products.filter((product) => {
+		const titleToSearch = title.toLowerCase();
+		const productTitle = product.title.toLowerCase();
+		if (productTitle.includes(titleToSearch)) {
+			return product;
+		}
+	});
+	return search;
+};
+const createProduct = async (newUserData) => {
+	const rta = await models.products.create(newUserData);
+	return rta;
+};
+const deleteProduct = async (id) => {
+	const product = await models.products.findByPk(id);
+	if (!product) {
+		throw {
+			isUserError:true,
+			status:400,
+			message: `The id ${id} does not exist`
+		}
+	}product.destroy();
+	return {id};
+};
 module.exports = {
-	listProducts : () => {
-    return 'Lista de productos'
-	},
-	shearchProducts : (title) => {
-    return title;
-	},
-	createProduct : (newUserData) => {
-		const newProduct = {
-			id:uuidv4(),
-			...newUserData
-		};
-		return newProduct
-	},
-  deleteProduct: (id)=>{
-    return id;
-  }
+	listProducts,
+	shearchProducts,
+	createProduct,
+	deleteProduct,
 };
