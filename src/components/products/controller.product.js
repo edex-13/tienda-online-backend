@@ -2,9 +2,12 @@ const {v4: uuidv4} = require('uuid');
 
 // const table = 'user';
 
+const {models}  = require('../../data/sequelize.data.js')
+
 module.exports = {
-	listProducts : () => {
-    return 'Lista de productos'
+	listProducts : async () => {
+		const rta = await models.products.findAll()
+    return rta;
 	},
 	shearchProducts : (title) => {
     return title;
