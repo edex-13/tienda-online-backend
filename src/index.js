@@ -11,10 +11,10 @@ const products = require('./components/products/network.product.js');
 const {logError, userError, internalError} = require('./middlewares/error.handle.js');
 const response = require('./middlewares/response.handle.js');
 
-const whitelist = ['http://edex13.me/'];
+const whitelist = ['http://localhost:3005','http://edex13.me/'];
 const options = {
 	origin: (origin, callback) => {
-		if (whitelist.includes(origin)) {
+		if (whitelist.includes(origin) || !origin) {
 			callback(null, true);
 		} else {
 			callback(new Error('Acceso no permitido'));
