@@ -1,5 +1,5 @@
 const logError = (err, req, res, next) => {
-	console.error(err);
+	console.error('SUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU:' + err);
 	next(err);
 };
 
@@ -11,6 +11,17 @@ const userError = (err, req, res, next) => {
 			error: true,
 			status,
 			message,
+		});
+	}
+	if (err.parent) {
+		const {fields, parent} = err;
+		res.status(status).json({
+			error: true,
+			status,
+			message:{
+				error:parent.detail,
+				field: fields,
+			},
 		});
 	}
 	next(err);
@@ -26,4 +37,4 @@ const internalError = (err, req, res, next) => {
 	});
 };
 
-module.exports= {logError,userError,internalError}
+module.exports = {logError, userError, internalError};
