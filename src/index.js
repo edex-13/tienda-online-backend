@@ -9,7 +9,7 @@ const config = require('../config');
 const app = express();
 const products = require('./components/products/network.product.js');
 const {logError, userError, internalError} = require('./middlewares/error.handle.js');
-const response = require('./middlewares/response.handle.js');
+
 
 const whitelist = ['http://localhost:3005','http://edex13.me/'];
 const options = {

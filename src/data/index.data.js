@@ -2,6 +2,7 @@ const {productSchema, Products} = require('../components/products/models.product
 
 const setupModels = (sequelize) => {
 	Products.init(productSchema, Products.config(sequelize));
+	console.log("SUUUUUUUUUU CONEXION")
 };
 
 module.exports = setupModels;
