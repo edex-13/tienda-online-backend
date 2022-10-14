@@ -11,7 +11,7 @@ const products = require('./components/products/network.product.js');
 const {logError, userError, internalError} = require('./middlewares/error.handle.js');
 
 
-const whitelist = ['http://localhost:3005','http://edex13.me/' , 'https://edex-13.github.io/tienda-online-frontend/'];
+const whitelist = ['http://localhost:3005','http://edex13.me/' , 'https://edex-13.github.io/tienda-online-frontend/' , 'https://edex-13.github.io' ];
 const options = {
 	origin: (origin, callback) => {
 		if (whitelist.includes(origin) || !origin) {
